@@ -1,0 +1,30 @@
+# Local environment file
+.env
+
+# Node.js
+**/node_modules/
+**/dist/
+**/build/
+
+# Python caching & environment
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+.venv/
+env/
+venv/
+
+# Docker database volumes and uploads
+postgres_data/
+uploads/
+**/email_logs.txt
+
+# OS/IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Project archives
+*.zip
