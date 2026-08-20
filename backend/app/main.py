@@ -65,7 +65,7 @@ def seed_database():
             resident = User(
                 email="resident@society.com",
                 hashed_password=get_password_hash("resident123"),
-                full_name="Alice Green",
+                full_name="Dipanjan Choudhury",
                 role="resident",
                 unit_number="Flat 402"
             )
