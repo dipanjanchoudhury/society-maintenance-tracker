@@ -12,7 +12,8 @@ services:
           name: society-db
           property: connectionString
       - key: REDIS_URL
-        fromRedis:
+        fromService:
+          type: redis
           name: society-redis
           property: connectionString
       - key: SECRET_KEY
@@ -45,17 +46,19 @@ services:
           name: society-db
           property: connectionString
       - key: REDIS_URL
-        fromRedis:
+        fromService:
+          type: redis
           name: society-redis
           property: connectionString
       - key: USE_MOCK_EMAIL
         value: "true"
 
+  # Redis Cache Service
+  - type: redis
+    name: society-redis
+    ipAllowList: []
+
 databases:
   - name: society-db
     databaseName: society_tracker
     user: postgres
-
-redis:
-  - name: society-redis
-    ipAllowList: []
