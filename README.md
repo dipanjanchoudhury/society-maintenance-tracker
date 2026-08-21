@@ -82,6 +82,41 @@ If you wish to test with a real SMTP client (e.g., Google SMTP):
 - Set `USE_MOCK_EMAIL=false` in `.env`.
 - Set `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`, and `SMTP_FROM`.
 
+
+---
+
+## ☁️ Production Deployment (Vercel & Render)
+
+This application is ready to be deployed to production using **Render** (for the Backend, Database, and Background Worker) and **Vercel** (for the Frontend).
+
+### 1. Deploy the Backend & Database on Render
+
+We have included a blueprint configuration (`render.yaml`) that configures the entire backend stack with a single click.
+
+1. Go to your **Render Dashboard** -> **Blueprints** -> **New Blueprint Instance**.
+2. Select your GitHub repository.
+3. Render will automatically detect `render.yaml` and configure:
+   - A PostgreSQL Database (`society-db`).
+   - A Redis server (`society-redis`).
+   - A FastAPI Web Service (`society-backend`).
+   - A Celery Worker (`society-worker`).
+4. Click **Apply**.
+5. Once deployed, copy your backend Web Service URL (e.g. `https://society-backend.onrender.com`).
+
+### 2. Deploy the Frontend on Vercel
+
+We have configured `frontend/vercel.json` to handle React Router client-side page routing.
+
+1. Go to your **Vercel Dashboard** -> **Add New** -> **Project**.
+2. Select your GitHub repository.
+3. In the project configuration:
+   - Set **Framework Preset** to **Vite**.
+   - Set **Root Directory** to `frontend`.
+4. Under **Environment Variables**, add:
+   - Key: `VITE_API_URL`
+   - Value: `https://YOUR_RENDER_BACKEND_URL` (replace with the URL from Render).
+5. Click **Deploy**. Vercel will build and host your frontend website!
+
 ---
 
 ## 📊 Database Schema
