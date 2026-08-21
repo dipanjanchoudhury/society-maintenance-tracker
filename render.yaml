@@ -12,8 +12,7 @@ services:
           name: society-db
           property: connectionString
       - key: REDIS_URL
-        fromService:
-          type: pvt
+        fromRedis:
           name: society-redis
           property: connectionString
       - key: SECRET_KEY
@@ -46,20 +45,17 @@ services:
           name: society-db
           property: connectionString
       - key: REDIS_URL
-        fromService:
-          type: pvt
+        fromRedis:
           name: society-redis
           property: connectionString
       - key: USE_MOCK_EMAIL
         value: "true"
 
-  # Redis Private Service
-  - type: pvt
-    name: society-redis
-    env: redis
-    ipAllowList: [] # only allow internal traffic
-
 databases:
   - name: society-db
     databaseName: society_tracker
     user: postgres
+
+redis:
+  - name: society-redis
+    ipAllowList: []
