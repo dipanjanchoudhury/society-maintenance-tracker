@@ -1,3 +1,5 @@
+import threading
+import os
 from typing import List
 from app.models.models import Complaint, ComplaintStatusHistory, Notice
 from app.core.celery_app import send_email_task
@@ -5,8 +7,18 @@ from app.core.celery_app import send_email_task
 class NotificationService:
     @staticmethod
     def send_email_async(to_email: str, subject: str, body_html: str):
-        # Dispatch to celery task
-        send_email_task.delay(to_email, subject, body_html)
+        # On Render free tier (which doesn't have Redis/Celery worker on free plans), 
+        # we run the email sending in a background thread to avoid blocking requests.
+        if os.getenv("RENDER"):
+            thread = threading.Thread(target=send_email_task, args=(to_email, subject, body_html))
+            thread.start()
+        else:
+            try:
+                send_email_task.delay(to_email, subject, body_html)
+            except Exception:
+                thread = threading.Thread(target=send_email_task, args=(to_email, subject, body_html))
+                thread.start()
+
 
     @staticmethod
     def notify_complaint_status_change(complaint: Complaint, history: ComplaintStatusHistory, resident_email: str, resident_name: str):

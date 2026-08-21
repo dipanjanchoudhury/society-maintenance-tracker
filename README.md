@@ -85,37 +85,37 @@ If you wish to test with a real SMTP client (e.g., Google SMTP):
 
 ---
 
-## ☁️ Production Deployment (Vercel & Render)
 
-This application is ready to be deployed to production using **Render** (for the Backend, Database, and Background Worker) and **Vercel** (for the Frontend).
+---
 
-### 1. Deploy the Backend & Database on Render
+## ☁️ Production Deployment (100% Free, No Credit Card Required)
 
-We have included a blueprint configuration (`render.yaml`) that configures the entire backend stack with a single click.
+This application can be deployed completely for free without entering any payment or credit card details, using **Neon** (for PostgreSQL) and **Render** (for FastAPI).
+
+### 1. Get a Free PostgreSQL Database on Neon
+1. Go to **[neon.tech](https://neon.tech)** and sign up for a free account.
+2. Create a new project.
+3. Once the project is created, copy the **Connection String** (it starts with `postgresql://...`).
+
+### 2. Deploy the Backend on Render (Free Web Service)
+We have included a blueprint configuration (`render.yaml`) that runs the backend as a single Free Web Service, with background tasks handled via internal threading so you do not need paid workers or Redis.
 
 1. Go to your **Render Dashboard** -> **Blueprints** -> **New Blueprint Instance**.
-2. Select your GitHub repository.
-3. Render will automatically detect `render.yaml` and configure:
-   - A PostgreSQL Database (`society-db`).
-   - A Redis server (`society-redis`).
-   - A FastAPI Web Service (`society-backend`).
-   - A Celery Worker (`society-worker`).
+2. Select your GitHub repository (`society-maintenance-tracker`).
+3. Render will scan `render.yaml` and prompt you for the **`DATABASE_URL`**. Paste your Neon Connection String there.
 4. Click **Apply**.
-5. Once deployed, copy your backend Web Service URL (e.g. `https://society-backend.onrender.com`).
+5. Once deployed, copy your live backend URL (e.g., `https://society-backend.onrender.com`).
 
-### 2. Deploy the Frontend on Vercel
-
-We have configured `frontend/vercel.json` to handle React Router client-side page routing.
-
+### 3. Deploy the Frontend on Vercel
 1. Go to your **Vercel Dashboard** -> **Add New** -> **Project**.
-2. Select your GitHub repository.
-3. In the project configuration:
+2. Select your GitHub repository (`society-maintenance-tracker`).
+3. Configure the project:
    - Set **Framework Preset** to **Vite**.
    - Set **Root Directory** to `frontend`.
-4. Under **Environment Variables**, add:
-   - Key: `VITE_API_URL`
-   - Value: `https://YOUR_RENDER_BACKEND_URL` (replace with the URL from Render).
-5. Click **Deploy**. Vercel will build and host your frontend website!
+4. Add an **Environment Variable**:
+   - **Key**: `VITE_API_URL`
+   - **Value**: *Your Render Backend URL* (from Step 2).
+5. Click **Deploy**. Vercel will host your frontend website!
 
 ---
 
