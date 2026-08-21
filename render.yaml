@@ -61,4 +61,3 @@ services:
 databases:
   - name: society-db
     databaseName: society_tracker
-    user: postgres
